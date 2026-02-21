@@ -5,30 +5,23 @@ import { Label } from "@/components/ui/label";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import z from "zod";
+import { Register } from "../actions";
+import { registerSchema } from "../schemas";
 import SocialLogin from "./social";
-
-const formSchema = z
-  .object({
-    name: z.string().min(3, "Nome deve conter no mínimo 3 caracteres."),
-    email: z.email("Por favor, insira um endereço de email válido."),
-    password: z.string().min(4, "Senha deve conter no mínimo 4 caracteres."),
-    confirmPassword: z.string(),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "As senhas não coincidem.",
-    path: ["confirmPassword"],
-  });
 
 const RegisterForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const router = useRouter();
+
+  const form = useForm<z.infer<typeof registerSchema>>({
+    resolver: zodResolver(registerSchema),
     defaultValues: {
       name: "",
       email: "",
@@ -37,21 +30,22 @@ const RegisterForm = () => {
     },
   });
 
-  const onSubmit = async (data: z.infer<typeof formSchema>) => {
-    toast("You submitted the following values:", {
-      description: (
-        <pre className="bg-black text-code-foreground mt-2 w-[320px] overflow-x-auto rounded-md p-4">
-          <code>{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-      position: "bottom-right",
-      classNames: {
-        content: "flex flex-col gap-2",
-      },
-      style: {
-        "--border-radius": "calc(var(--radius)  + 4px)",
-      } as React.CSSProperties,
-    });
+  const onSubmit = async (data: z.infer<typeof registerSchema>) => {
+    const response = await Register(data);
+
+    if (response.error) {
+      toast.error(response.error);
+      return;
+    }
+
+    toast.success("Cadastro realizado com sucesso!");
+
+    form.reset();
+
+    setTimeout(() => {
+      toast.info("Redirecionando para a página de login...");
+      router.push("/auth/login");
+    }, 3000);
   };
 
   return (

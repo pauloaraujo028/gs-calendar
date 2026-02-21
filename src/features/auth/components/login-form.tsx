@@ -7,41 +7,37 @@ import { Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+
+import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-
 import z from "zod";
-
-const formSchema = z.object({
-  email: z.email("Por favor, insira um endereço de email válido."),
-  password: z.string().min(5, "Senha deve conter no mínimo 5 caracteres."),
-});
+import { Login } from "../actions";
+import { loginSchema } from "../schemas";
 
 const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const router = useRouter();
+
+  const form = useForm<z.infer<typeof loginSchema>>({
+    resolver: zodResolver(loginSchema),
     defaultValues: {
       email: "",
       password: "",
     },
   });
 
-  const onSubmit = (data: z.infer<typeof formSchema>) => {
-    toast("Você enviou os seguintes valores:", {
-      description: (
-        <pre className="bg-code text-black mt-2 w-[320px] overflow-x-auto rounded-md p-4">
-          <code>{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-      position: "bottom-right",
-      classNames: {
-        content: "flex flex-col gap-2",
-      },
-      style: {
-        "--border-radius": "calc(var(--radius)  + 4px)",
-      } as React.CSSProperties,
-    });
+  const onSubmit = async (data: z.infer<typeof loginSchema>) => {
+    const response = await Login(data);
+
+    if (response.error) {
+      toast.error(response.error);
+      return;
+    }
+
+    toast.success("Login realizado com sucesso!");
+
+    router.push("/dashboard");
   };
 
   return (

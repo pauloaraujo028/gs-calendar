@@ -21,7 +21,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR" suppressHydrationWarning>
-      <body className={`${inter.className}  antialiased`}>
+      <body
+        className={`${inter.className}  antialiased`}
+        cz-shortcut-listen="true"
+      >
         {children}
         <Toaster />
       </body>
