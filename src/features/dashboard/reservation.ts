@@ -3,29 +3,33 @@
 import { auth } from "@/lib/auth";
 import { db } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
+import { headers } from "next/headers";
 
 interface ReservationInput {
   id?: string;
   roomId: string;
   title: string;
   description?: string;
-  startTime: Date;
-  endTime: Date;
+  startTime: string;
+  endTime: string;
 }
 
 export async function saveReservationAction(data: ReservationInput) {
-  const session = await auth.api.getSession();
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
   if (!session) throw new Error("Não autorizado");
+
+  const startTime = new Date(data.startTime);
+  const endTime = new Date(data.endTime);
 
   const conflict = await db.reservation.findFirst({
     where: {
       roomId: data.roomId,
       status: "ACTIVE",
       ...(data.id ? { id: { not: data.id } } : {}),
-      AND: [
-        { startTime: { lt: data.endTime } },
-        { endTime: { gt: data.startTime } },
-      ],
+      AND: [{ startTime: { lt: endTime } }, { endTime: { gt: startTime } }],
     },
   });
 
@@ -40,8 +44,8 @@ export async function saveReservationAction(data: ReservationInput) {
         title: data.title,
         description: data.description,
         roomId: data.roomId,
-        startTime: data.startTime,
-        endTime: data.endTime,
+        startTime,
+        endTime,
       },
     });
   } else {
@@ -50,14 +54,14 @@ export async function saveReservationAction(data: ReservationInput) {
         title: data.title,
         description: data.description,
         roomId: data.roomId,
-        startTime: data.startTime,
-        endTime: data.endTime,
+        startTime,
+        endTime,
         userId: session.user.id,
       },
     });
   }
 
-  revalidatePath("/");
+  revalidatePath("/dashboard");
 }
 
 export async function cancelReservationAction(id: string) {

@@ -124,18 +124,20 @@ export default function ReservationForm({
     setLoading(true);
     try {
       await saveReservationAction({
-        id: editReservation?.id,
+        ...(editReservation?.id ? { id: editReservation.id } : {}),
         roomId: form.roomId,
         title: form.title,
         description: form.description,
-        startTime: toDateTime(form.date, form.startTime),
-        endTime: toDateTime(form.date, form.endTime),
+        startTime: toDateTime(form.date, form.startTime).toISOString(),
+        endTime: toDateTime(form.date, form.endTime).toISOString(),
       });
 
       toast.success(isEditing ? "Reserva atualizada" : "Reserva criada");
       onClose();
-    } catch {
-      toast.error("Erro ao salvar reserva");
+    } catch (err) {
+      toast.error(
+        err instanceof Error ? err.message : "Erro ao salvar reserva",
+      );
     } finally {
       setLoading(false);
     }
