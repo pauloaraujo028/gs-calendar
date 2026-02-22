@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input";
 import WeeklyCalendar from "@/components/weekly-calendar";
 import { Reservation, Room } from "@/lib/generated/prisma/client";
 import { formatDate } from "@/lib/reservation-utils";
+import { formatDateInput } from "@/lib/utils";
 import { Calendar, CalendarDays, LayoutGrid, Plus } from "lucide-react";
 import RoomList from "./room-list";
 
@@ -67,8 +68,18 @@ const Content = ({ rooms, reservations }: Props) => {
             <div className="flex items-center gap-3">
               <Input
                 type="date"
-                value={selectedDate.toISOString().split("T")[0]}
-                onChange={(e) => setSelectedDate(new Date(e.target.value))}
+                value={formatDateInput(selectedDate)}
+                onChange={(e) => {
+                  const [year, month, day] = e.target.value.split("-");
+                  setSelectedDate(
+                    new Date(
+                      Number(year),
+                      Number(month) - 1,
+                      Number(day),
+                      12, // meio-dia evita bug de fuso
+                    ),
+                  );
+                }}
                 className="w-auto"
               />
               <span className="text-sm text-muted-foreground">
