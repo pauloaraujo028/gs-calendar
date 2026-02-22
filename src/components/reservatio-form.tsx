@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -159,6 +160,10 @@ export default function ReservationForm({
           <DialogTitle>
             {isEditing ? "Editar Reserva" : "Nova Reserva"}
           </DialogTitle>
+
+          <DialogDescription>
+            Preencha as informações abaixo para salvar a reserva.
+          </DialogDescription>
         </DialogHeader>
 
         <div className="space-y-4 py-2">
