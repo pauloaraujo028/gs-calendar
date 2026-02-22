@@ -1,6 +1,6 @@
 "use client";
 
-import { Input } from "@/components/ui/input";
+import { InputForm } from "@/components/ui/input-form";
 import { Label } from "@/components/ui/label";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Eye, EyeOff } from "lucide-react";
@@ -66,7 +66,7 @@ const RegisterForm = () => {
       >
         <div className="space-y-1">
           <Label>Nome</Label>
-          <Input
+          <InputForm
             id="name"
             placeholder="Digite seu nome"
             type="text"
@@ -77,7 +77,7 @@ const RegisterForm = () => {
 
         <div className="space-y-1">
           <Label>E-mail</Label>
-          <Input
+          <InputForm
             id="email"
             type="email"
             placeholder="exemplo@email.com"
@@ -89,7 +89,7 @@ const RegisterForm = () => {
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <div className="space-y-1">
             <Label>Senha</Label>
-            <Input
+            <InputForm
               id="password"
               type={showPassword ? "text" : "password"}
               placeholder="••••••••"
@@ -109,7 +109,7 @@ const RegisterForm = () => {
 
           <div className="space-y-1">
             <Label>Confirmar senha</Label>
-            <Input
+            <InputForm
               id="confirmPassword"
               type={showConfirmPassword ? "text" : "password"}
               placeholder="••••••••"

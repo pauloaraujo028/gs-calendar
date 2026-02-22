@@ -1,14 +1,14 @@
 import { getCurrentUser } from "@/data/get-current-user";
+import { getReservations, getRooms } from "@/features/dashboard/actions";
+import Content from "@/features/dashboard/components/content";
 import { redirect } from "next/navigation";
 
-export default async function Home() {
+export default async function Page() {
+  const rooms = await getRooms();
+  const reservations = await getReservations();
   const currentUser = await getCurrentUser();
 
   if (!currentUser?.id) redirect("/auth/login");
 
-  return (
-    <div>
-      <h1></h1>
-    </div>
-  );
+  return <Content rooms={rooms} reservations={reservations} />;
 }

@@ -1,6 +1,5 @@
 "use client";
 
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Eye, EyeOff } from "lucide-react";
@@ -8,6 +7,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
+import { InputForm } from "@/components/ui/input-form";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import z from "zod";
@@ -58,7 +58,7 @@ const LoginForm = () => {
       >
         <div className="space-y-1">
           <Label htmlFor="email">E-mail</Label>
-          <Input
+          <InputForm
             id="email"
             type="email"
             placeholder="exemplo@email.com"
@@ -78,7 +78,7 @@ const LoginForm = () => {
             </Link>
           </div>
 
-          <Input
+          <InputForm
             id="password"
             type={showPassword ? "text" : "password"}
             placeholder="••••••••"
