@@ -33,6 +33,17 @@ const Content = ({ rooms, reservations }: Props) => {
 
   const reservationCounts: Record<string, number> = {};
 
+  for (const reservation of reservations) {
+    if (reservation.status !== "ACTIVE") continue;
+
+    if (reservation.startTime.toDateString() !== selectedDate.toDateString()) {
+      continue;
+    }
+
+    reservationCounts[reservation.roomId] =
+      (reservationCounts[reservation.roomId] ?? 0) + 1;
+  }
+
   function handleSlotClick(roomId: string, time: string, date?: string) {
     setDefaultSlot({ roomId, time });
     if (date) setSelectedDate(new Date(date));
