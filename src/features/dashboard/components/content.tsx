@@ -145,7 +145,6 @@ const Content = ({ rooms, reservations }: Props) => {
         </div>
 
         <div className="grid gap-6 lg:grid-cols-[260px_1fr]">
-          {/* Sidebar */}
           <aside>
             <RoomList
               rooms={rooms}
@@ -157,7 +156,6 @@ const Content = ({ rooms, reservations }: Props) => {
             />
           </aside>
 
-          {/* Main content */}
           <section className="min-w-0">
             <h2 className="mb-3 text-sm font-medium text-muted-foreground uppercase tracking-wider">
               {view === "grid"

@@ -12,7 +12,6 @@ import { toast } from "sonner";
 import z from "zod";
 import { Register } from "../actions";
 import { registerSchema } from "../schemas";
-import SocialLogin from "./social";
 
 const RegisterForm = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -131,11 +130,11 @@ const RegisterForm = () => {
         <div className="pt-1">
           <p className="mb-4 text-[10px] text-slate-500">
             Ao clicar em cadastrar, você concorda com nossos
-            <Link href="#" className="mx-1 text-indigo-600 hover:underline">
+            <Link href="#" className="mx-1 text-primary hover:underline">
               Termos de Serviço
             </Link>
             e
-            <Link href="#" className="ml-1 text-indigo-600 hover:underline">
+            <Link href="#" className="ml-1 text-primary hover:underline">
               Política de Privacidade
             </Link>
             .
@@ -143,28 +142,18 @@ const RegisterForm = () => {
           <button
             type="submit"
             form="register-form"
-            className="flex w-full transform cursor-pointer items-center justify-center rounded-xl bg-indigo-600 py-3 font-bold text-white shadow-lg shadow-indigo-200 transition-all hover:-translate-y-0.5 hover:bg-indigo-700 active:scale-[0.98]"
+            className="flex w-full transform cursor-pointer items-center justify-center rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 py-3 font-bold shadow-lg shadow-indigo-200 transition-all hover:-translate-y-0.5 active:scale-[0.98]"
           >
             Criar conta
           </button>
         </div>
       </form>
 
-      <div className="relative flex items-center py-2">
-        <div className="grow border-t border-slate-200"></div>
-        <span className="mx-4 shrink text-xs font-semibold tracking-widest text-slate-400 uppercase">
-          Ou cadastre-se com
-        </span>
-        <div className="grow border-t border-slate-200"></div>
-      </div>
-
-      <SocialLogin />
-
       <p className="text-center text-sm text-slate-600">
         Já possui uma conta?
         <Link
           href="/auth/login"
-          className="ml-1 font-bold text-indigo-600 underline-offset-4 transition-colors hover:text-indigo-700 hover:underline"
+          className="ml-1 font-bold text-primary hover:text-accent-foreground underline-offset-4 transition-colors hover:underline"
         >
           Fazer login
         </Link>

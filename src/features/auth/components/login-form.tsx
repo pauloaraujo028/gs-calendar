@@ -68,16 +68,6 @@ const LoginForm = () => {
         </div>
 
         <div className="space-y-1">
-          <div className="flex items-center justify-between">
-            <Label>Senha</Label>
-            <Link
-              href="#"
-              className="text-xs font-semibold text-indigo-600 transition-colors hover:text-indigo-700"
-            >
-              Esqueceu a senha?
-            </Link>
-          </div>
-
           <InputForm
             id="password"
             type={showPassword ? "text" : "password"}
@@ -96,42 +86,20 @@ const LoginForm = () => {
           />
         </div>
 
-        <div className="flex items-center space-x-2">
-          <input
-            type="checkbox"
-            id="remember"
-            className="h-4 w-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500"
-          />
-          <label
-            htmlFor="remember"
-            className="cursor-pointer text-xs font-medium text-slate-600"
-          >
-            Lembrar de mim
-          </label>
-        </div>
-
         <button
           type="submit"
           form="signin-form"
-          className="flex w-full transform cursor-pointer items-center justify-center rounded-xl bg-indigo-600 py-3 font-bold text-white shadow-lg shadow-indigo-200 transition-all hover:-translate-y-0.5 hover:bg-indigo-700 active:scale-[0.98]"
+          className="flex w-full transform cursor-pointer items-center justify-center rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 py-3 font-bold  shadow-lg shadow-indigo-200 transition-all hover:-translate-y-0.5 active:scale-[0.98]"
         >
           Entrar
         </button>
       </form>
 
-      <div className="relative flex items-center py-2">
-        <div className="grow border-t border-slate-200"></div>
-        <span className="mx-4 shrink text-xs font-semibold tracking-widest text-slate-400 uppercase">
-          Ou continue com
-        </span>
-        <div className="grow border-t border-slate-200"></div>
-      </div>
-
       <p className="text-center text-sm text-slate-600">
         Não tem uma conta?
         <Link
           href="/auth/register"
-          className="ml-1 font-bold text-indigo-600 underline-offset-4 transition-colors hover:text-indigo-700 hover:underline"
+          className="ml-1 font-bold text-primary hover:text-accent-foreground underline-offset-4 transition-colors hover:underline"
         >
           Criar conta gratuita
         </Link>

@@ -97,7 +97,6 @@ export default function WeeklyCalendar({
           )}
           <div className="overflow-x-auto rounded-lg border border-border bg-card">
             <div className="min-w-175">
-              {/* Header */}
               <div
                 className="grid border-b border-border"
                 style={{ gridTemplateColumns: "56px repeat(7, 1fr)" }}
@@ -124,12 +123,10 @@ export default function WeeklyCalendar({
                 ))}
               </div>
 
-              {/* Time grid body */}
               <div
                 className="relative grid"
                 style={{ gridTemplateColumns: "56px repeat(7, 1fr)" }}
               >
-                {/* Hour labels */}
                 <div className="border-r border-border">
                   {HOURS.map((h) => (
                     <div
@@ -144,7 +141,6 @@ export default function WeeklyCalendar({
                   ))}
                 </div>
 
-                {/* Day columns */}
                 {weekDays.map((day) => {
                   const dayReservations =
                     resMap[`${day.date}-${room.id}`] || [];
@@ -155,7 +151,7 @@ export default function WeeklyCalendar({
                         day.isToday ? "bg-primary/5" : ""
                       }`}
                     >
-                      {/* Hour grid lines */}
+            
                       {HOURS.map((h) => (
                         <div
                           key={h}
@@ -171,7 +167,6 @@ export default function WeeklyCalendar({
                         />
                       ))}
 
-                      {/* Reservation blocks */}
                       {dayReservations.map((res) => {
                         const startMin =
                           minutesFromDate(res.startTime) -
