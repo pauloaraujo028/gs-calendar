@@ -62,7 +62,7 @@ function RoomCard({
 }
 
 interface RoomListProps {
-  rooms: Room[]; // ✅ agora vem por props
+  rooms: Room[];
   selectedRoom: string | null;
   onSelectRoom: (roomId: string) => void;
   reservationCounts: Record<string, number>;

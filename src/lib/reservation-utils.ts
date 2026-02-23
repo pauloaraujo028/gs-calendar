@@ -93,7 +93,8 @@ export function generateTimeSlots(
       const reservation = reservations.find((r) => {
         if (r.roomId !== roomId) return false;
 
-        // 👉 mesma data (ignora hora)
+        if (r.status !== "ACTIVE") return false;
+
         const sameDay =
           r.startTime.toDateString() === selectedDate.toDateString();
         if (!sameDay) return false;

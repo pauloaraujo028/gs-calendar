@@ -65,7 +65,10 @@ export async function saveReservationAction(data: ReservationInput) {
 }
 
 export async function cancelReservationAction(id: string) {
-  const session = await auth.api.getSession();
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
   if (!session) throw new Error("Não autorizado");
 
   await db.reservation.update({
@@ -73,5 +76,5 @@ export async function cancelReservationAction(id: string) {
     data: { status: "CANCELLED" },
   });
 
-  revalidatePath("/");
+  revalidatePath("/dashboard");
 }
