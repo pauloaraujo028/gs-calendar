@@ -175,8 +175,8 @@ export default function ReservationForm({
               value={form.roomId}
               onValueChange={(v) => setForm((f) => ({ ...f, roomId: v }))}
             >
-              <SelectTrigger>
-                <SelectValue />
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Selecione uma sala…" />
               </SelectTrigger>
               <SelectContent>
                 {rooms.map((r) => (
@@ -204,7 +204,7 @@ export default function ReservationForm({
                 value={form.startTime}
                 onValueChange={(v) => setForm((f) => ({ ...f, startTime: v }))}
               >
-                <SelectTrigger>
+                <SelectTrigger className="w-full">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -223,7 +223,7 @@ export default function ReservationForm({
                 value={form.endTime}
                 onValueChange={(v) => setForm((f) => ({ ...f, endTime: v }))}
               >
-                <SelectTrigger>
+                <SelectTrigger className="w-full">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -239,7 +239,7 @@ export default function ReservationForm({
 
           {!validTime && (
             <p className="text-xs text-destructive">
-              Horário inválido (08:00–18:00, mínimo 30 min)
+              Horário inválido (07:00–16:30, mínimo 30 min)
             </p>
           )}
 
@@ -250,17 +250,19 @@ export default function ReservationForm({
               onChange={(e) =>
                 setForm((f) => ({ ...f, title: e.target.value }))
               }
+              placeholder="Ex: Alinhamento de equipe"
             />
           </div>
 
           <div className="space-y-1.5">
-            <Label>Observações</Label>
+            <Label>Observações (opcional)</Label>
             <Textarea
               value={form.description}
               onChange={(e) =>
                 setForm((f) => ({ ...f, description: e.target.value }))
               }
               rows={2}
+              placeholder="Informações adicionais..."
             />
           </div>
         </div>

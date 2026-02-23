@@ -35,23 +35,21 @@ export default function Content({ rooms }: { rooms: Room[] }) {
 
   return (
     <div className="min-h-screen bg-background">
-      <header className="sticky top-0 z-30 border-b border-border bg-card/80 backdrop-blur-sm">
-        <div className="mx-auto flex max-w-4xl items-center gap-3 px-4 py-3 sm:px-6">
-          <Link href="/dashboard">
-            <Button variant="ghost" size="icon" className="shrink-0">
-              <ArrowLeft className="h-4 w-4" />
-            </Button>
-          </Link>
-          <div>
-            <h1 className="text-base font-semibold text-foreground leading-tight">
-              Configurações
-            </h1>
-            <p className="text-xs text-muted-foreground">
-              Salas, horários e regras do sistema
-            </p>
-          </div>
+      <div className="mx-auto flex max-w-4xl items-center gap-3 px-4 py-3 sm:px-6">
+        <Link href="/dashboard">
+          <Button variant="ghost" size="icon" className="shrink-0">
+            <ArrowLeft className="h-4 w-4" />
+          </Button>
+        </Link>
+        <div>
+          <h1 className="text-base font-semibold text-foreground leading-tight">
+            Configurações
+          </h1>
+          <p className="text-xs text-muted-foreground">
+            Salas, horários e regras do sistema
+          </p>
         </div>
-      </header>
+      </div>
 
       <main className="mx-auto max-w-4xl px-4 py-6 sm:px-6 space-y-8">
         {/* Business Hours */}
