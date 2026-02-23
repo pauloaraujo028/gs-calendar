@@ -76,19 +76,14 @@ const Content = ({ rooms, reservations }: Props) => {
       <main className="mx-auto max-w-6xl px-4 py-6 sm:px-6">
         <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex ">
-            <div className="flex items-center gap-3">
+            <div className="flex items-center justify-between w-full md:gap-3">
               <Input
                 type="date"
                 value={formatDateInput(selectedDate)}
                 onChange={(e) => {
                   const [year, month, day] = e.target.value.split("-");
                   setSelectedDate(
-                    new Date(
-                      Number(year),
-                      Number(month) - 1,
-                      Number(day),
-                      12, // meio-dia evita bug de fuso
-                    ),
+                    new Date(Number(year), Number(month) - 1, Number(day), 12),
                   );
                 }}
                 className="w-auto"
@@ -101,7 +96,7 @@ const Content = ({ rooms, reservations }: Props) => {
               </span>
             </div>
           </div>
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between md:gap-3">
             <div className="flex gap-1 rounded-lg border border-border p-0.5 w-fit">
               <button
                 onClick={() => setView("grid")}
