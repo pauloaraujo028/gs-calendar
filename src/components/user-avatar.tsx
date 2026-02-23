@@ -97,7 +97,7 @@ const UserAvatar = () => {
             <span>Meu Perfil</span>
           </Link>
           <Link
-            href="#"
+            href="/dashboard/settings"
             className="flex items-center space-x-3 px-4 py-2 text-sm text-slate-600 transition-colors hover:bg-slate-50 hover:text-indigo-600"
           >
             <Settings className="size-4" />

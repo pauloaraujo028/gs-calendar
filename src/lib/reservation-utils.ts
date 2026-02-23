@@ -1,6 +1,6 @@
 import { Reservation } from "./generated/prisma/client";
 
-export const BUSINESS_HOURS = { start: 8, end: 18 };
+export const BUSINESS_HOURS = { start: 7, end: 17 };
 export const MIN_DURATION_MINUTES = 30;
 
 export type TimeSlot = {

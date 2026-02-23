@@ -74,7 +74,7 @@ const Content = ({ rooms, reservations }: Props) => {
   return (
     <>
       <main className="mx-auto max-w-6xl px-4 py-6 sm:px-6">
-        <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
           <div className="flex ">
             <div className="flex items-center justify-between w-full md:gap-3">
               <Input

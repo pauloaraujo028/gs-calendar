@@ -98,13 +98,13 @@ export default function ReservationForm({
       setForm({
         roomId: defaultRoomId || "",
         date: defaultDate || "",
-        startTime: defaultStartTime || "08:00",
+        startTime: defaultStartTime || "07:00",
         endTime: defaultStartTime
           ? `${String(parseInt(defaultStartTime.split(":")[0]) + 1).padStart(
               2,
               "0",
             )}:${defaultStartTime.split(":")[1]}`
-          : "09:00",
+          : "08:00",
         title: "",
         description: "",
       });
