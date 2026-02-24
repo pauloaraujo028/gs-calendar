@@ -88,6 +88,7 @@ const Content = ({ rooms, reservations }: Props) => {
                   );
                 }}
                 className="w-auto"
+                disabled={!rooms.length}
               />
               <span className="text-sm text-muted-foreground">
                 {formatDate(selectedDate)} ·{" "}
@@ -138,6 +139,7 @@ const Content = ({ rooms, reservations }: Props) => {
               onClick={handleNewReservation}
               size="sm"
               className="gap-1.5"
+              disabled={!rooms.length}
             >
               <Plus className="h-4 w-4" />
               <span className="hidden sm:inline">Nova Reserva</span>

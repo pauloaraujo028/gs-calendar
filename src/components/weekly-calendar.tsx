@@ -86,6 +86,14 @@ export default function WeeklyCalendar({
 
   const hourHeight = 60;
 
+  if (reservations.length === 0) {
+    return (
+      <div className="rounded-lg border border-dashed border-border bg-muted/30 p-6 text-center text-sm text-muted-foreground">
+        Nenhuma reserva para este dia.
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-6">
       {roomsToShow.map((room) => (
@@ -151,7 +159,6 @@ export default function WeeklyCalendar({
                         day.isToday ? "bg-primary/5" : ""
                       }`}
                     >
-            
                       {HOURS.map((h) => (
                         <div
                           key={h}

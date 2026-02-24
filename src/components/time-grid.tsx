@@ -23,7 +23,9 @@ export default function TimeGrid({
 
   if (!rooms || rooms.length === 0) {
     return (
-      <p className="text-sm text-muted-foreground">Nenhuma sala encontrada</p>
+      <div className="rounded-lg border border-dashed border-border bg-muted/30 p-6 text-center text-sm text-muted-foreground">
+        Nenhuma sala encontrada.
+      </div>
     );
   }
 
