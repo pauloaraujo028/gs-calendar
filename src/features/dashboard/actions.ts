@@ -11,14 +11,3 @@ export async function getRooms() {
 
   return rooms;
 }
-
-export async function getReservations() {
-  const rooms = await db.reservation.findMany({
-    include: {
-      room: true,
-      user: true,
-    },
-  });
-
-  return rooms;
-}

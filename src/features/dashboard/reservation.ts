@@ -14,6 +14,21 @@ interface ReservationInput {
   endTime: string;
 }
 
+export async function getReservations() {
+  const reservations = await db.reservation.findMany({
+    include: {
+      room: true,
+      user: {
+        select: {
+          name: true,
+        },
+      },
+    },
+  });
+
+  return reservations;
+}
+
 export async function saveReservationAction(data: ReservationInput) {
   const session = await auth.api.getSession({
     headers: await headers(),

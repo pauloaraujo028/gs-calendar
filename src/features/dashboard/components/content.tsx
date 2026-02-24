@@ -12,11 +12,12 @@ import { Reservation, Room } from "@/lib/generated/prisma/client";
 import { formatDate } from "@/lib/reservation-utils";
 import { formatDateInput } from "@/lib/utils";
 import { Calendar, CalendarDays, LayoutGrid, Plus } from "lucide-react";
+import { ReservationWithUser } from "../types";
 import RoomList from "./room-list";
 
 type Props = {
   rooms: Room[];
-  reservations: Reservation[];
+  reservations: ReservationWithUser[];
 };
 
 const Content = ({ rooms, reservations }: Props) => {

@@ -1,12 +1,13 @@
-import { Reservation, Room } from "@/lib/generated/prisma/client";
+import { ReservationWithUser } from "@/features/dashboard/types";
+import { Room } from "@/lib/generated/prisma/client";
 import { Clock, MessageSquare, User } from "lucide-react";
 
 interface ReservationListProps {
   rooms: Room[];
-  reservations: Reservation[];
+  reservations: ReservationWithUser[];
   date: Date;
   roomId: string | null;
-  onReservationClick: (reservation: Reservation) => void;
+  onReservationClick: (reservation: ReservationWithUser) => void;
 }
 
 function isSameDay(date: Date, dateStr: string) {
@@ -65,14 +66,15 @@ export default function ReservationList({
               </div>
               <span className="ml-2 flex shrink-0 items-center gap-1 rounded-md bg-secondary px-2 py-0.5 text-xs text-secondary-foreground">
                 <Clock className="h-3 w-3" />
-                {formatTime(r.startTime)}–{formatTime(r.endTime)}
+                {formatTime(r.startTime)} – {formatTime(r.endTime)}
               </span>
             </div>
             <div className="mt-2 flex items-center gap-3 text-xs text-muted-foreground">
-              {r.userId && (
+              {r.user?.name && (
                 <span className="flex items-center gap-1">
                   <User className="h-3 w-3" />
-                  Reservado por usuário
+                  Reservado por
+                  <strong className="capitalize">{r.user.name}</strong>
                 </span>
               )}
 
