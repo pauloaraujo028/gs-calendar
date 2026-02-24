@@ -13,6 +13,19 @@ export const auth = betterAuth({
     minPasswordLength: 4,
     requireEmailVerification: false,
   },
+  advanced: {
+    database: {
+      generateId: false,
+    },
+  },
+  user: {
+    additionalFields: {
+      role: {
+        type: ["ADMIN", "USER"],
+        input: false,
+      },
+    },
+  },
 
   plugins: [nextCookies()],
 });

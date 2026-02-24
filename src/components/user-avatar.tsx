@@ -96,14 +96,16 @@ const UserAvatar = () => {
             <User className="size-4" />
             <span>Meu Perfil</span>
           </Link>
-          <Link
-            href="/dashboard/settings"
-            onClick={() => setIsOpen(false)}
-            className="flex items-center space-x-3 px-4 py-2 text-sm text-slate-600 transition-colors hover:bg-accent hover:text-accent-foreground"
-          >
-            <Settings className="size-4" />
-            <span>Configurações</span>
-          </Link>
+          {user?.role === "ADMIN" && (
+            <Link
+              href="/dashboard/settings"
+              onClick={() => setIsOpen(false)}
+              className="flex items-center space-x-3 px-4 py-2 text-sm text-slate-600 transition-colors hover:bg-accent hover:text-accent-foreground"
+            >
+              <Settings className="size-4" />
+              <span>Configurações</span>
+            </Link>
+          )}
 
           <div className="my-2 border-t border-slate-50"></div>
 
