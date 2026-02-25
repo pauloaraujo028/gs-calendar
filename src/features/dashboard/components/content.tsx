@@ -69,7 +69,9 @@ const Content = ({ rooms, reservations }: Props) => {
   }
 
   const todayCount = reservations.filter(
-    (r) => r.startTime.toDateString() === selectedDate.toDateString(),
+    (r) =>
+      r.status === "ACTIVE" &&
+      r.startTime.toDateString() === selectedDate.toDateString(),
   ).length;
 
   return (
@@ -101,7 +103,7 @@ const Content = ({ rooms, reservations }: Props) => {
               />
               <span className="text-sm text-muted-foreground">
                 {formatDate(selectedDate)} ·{" "}
-                <strong className="text-foreground">{todayCount}</strong>{" "}
+                <strong className="text-foreground mr-1">{todayCount}</strong>
                 reserva
                 {todayCount !== 1 ? "s" : ""}
               </span>

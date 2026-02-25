@@ -1,6 +1,6 @@
 import { ReservationWithUser } from "@/features/dashboard/types";
 import { Room } from "@/lib/generated/prisma/client";
-import { Clock, MessageSquare, User } from "lucide-react";
+import { Clock, MessageSquare, Presentation, User } from "lucide-react";
 
 interface ReservationListProps {
   rooms: Room[];
@@ -60,30 +60,35 @@ export default function ReservationList({
                 <p className="font-medium text-card-foreground truncate">
                   {r.title}
                 </p>
-                <p className="text-xs text-primary font-medium mt-0.5">
-                  {room?.name}
-                </p>
+                <div className="flex items-center gap-3 text-muted-foreground">
+                  {r.description && (
+                    <span className="flex items-center gap-1 text-xs">
+                      <MessageSquare className="size-3" />
+                      {r.description.length > 30
+                        ? `${r.description.substring(0, 30)}…`
+                        : r.description}
+                    </span>
+                  )}
+                </div>
+                <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                  <Presentation className="size-3" />
+                  <p className="text-xs text-muted-foreground font-medium mt-0.5">
+                    Sala <span className="text-primary">{room?.name}</span>
+                  </p>
+                </div>
               </div>
               <span className="ml-2 flex shrink-0 items-center gap-1 rounded-md bg-secondary px-2 py-0.5 text-xs text-secondary-foreground">
-                <Clock className="h-3 w-3" />
+                <Clock className="size-3" />
                 {formatTime(r.startTime)} – {formatTime(r.endTime)}
               </span>
             </div>
-            <div className="mt-2 flex items-center gap-3 text-xs text-muted-foreground">
+
+            <div className="mt-4 flex items-center gap-3 text-xs text-muted-foreground">
               {r.user?.name && (
                 <span className="flex items-center gap-1">
-                  <User className="h-3 w-3" />
+                  <User className="size-3" />
                   Reservado por
                   <strong className="capitalize">{r.user.name}</strong>
-                </span>
-              )}
-
-              {r.description && (
-                <span className="flex items-center gap-1">
-                  <MessageSquare className="h-3 w-3" />
-                  {r.description.length > 30
-                    ? `${r.description.substring(0, 30)}…`
-                    : r.description}
                 </span>
               )}
             </div>
