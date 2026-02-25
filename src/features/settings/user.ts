@@ -45,6 +45,12 @@ export async function createUser(data: z.infer<typeof createUserSchema>) {
 
   const { name, email, password } = validatedFields.data;
 
+  if (!password) {
+    return {
+      error: "Falha ao criar usuário, verifique os dados digitados",
+    };
+  }
+
   try {
     await auth.api.signUpEmail({
       body: {

@@ -152,7 +152,6 @@ export default function UserManager({ users }: { users?: UserDTO[] }) {
 
   const handleUpdate = async (data: FormData) => {
     if (!editingUser) return;
-    console.log("UPDATE DISPAROU", data);
 
     try {
       await updateUser(editingUser.id, {
