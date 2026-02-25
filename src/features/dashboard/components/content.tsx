@@ -82,10 +82,19 @@ const Content = ({ rooms, reservations }: Props) => {
                 type="date"
                 value={formatDateInput(selectedDate)}
                 onChange={(e) => {
-                  const [year, month, day] = e.target.value.split("-");
-                  setSelectedDate(
-                    new Date(Number(year), Number(month) - 1, Number(day), 12),
-                  );
+                  const value = e.target.value;
+                  if (!value) return;
+
+                  const [year, month, day] = value.split("-").map(Number);
+
+                  if (!year || !month || !day) return;
+                  if (day < 1 || day > 31) return;
+
+                  const date = new Date(year, month - 1, day, 12);
+
+                  if (isNaN(date.getTime())) return;
+
+                  setSelectedDate(date);
                 }}
                 className="w-auto"
                 disabled={!rooms.length}
