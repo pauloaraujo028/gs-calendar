@@ -12,6 +12,8 @@ import {
   deleteRoom,
   updateRoom,
 } from "@/features/settings/actions";
+import { UserRole } from "@/lib/generated/prisma/enums";
+import UserManager from "./user-manager";
 
 type Room = {
   id: string;
@@ -20,7 +22,20 @@ type Room = {
   resources: string[];
 };
 
-export default function Content({ rooms }: { rooms: Room[] }) {
+type UserDTO = {
+  id: string;
+  name: string;
+  email: string;
+  role: UserRole;
+};
+
+export default function Content({
+  rooms,
+  users,
+}: {
+  rooms: Room[];
+  users: UserDTO[];
+}) {
   const handleAddRoom = () => {
     createRoom();
     toast("Sala criada", {
@@ -91,13 +106,16 @@ export default function Content({ rooms }: { rooms: Room[] }) {
             {rooms.length === 0 && (
               <Card>
                 <CardContent className="py-12 text-center text-muted-foreground">
-                  Nenhuma sala cadastrada. Clique em <strong>Nova Sala</strong>
+                  Nenhuma sala cadastrada. Clique em{" "}
+                  <strong className="mr-1">Nova Sala</strong>
                   para começar.
                 </CardContent>
               </Card>
             )}
           </div>
         </section>
+
+        <UserManager users={users} />
       </main>
     </div>
   );

@@ -1,6 +1,7 @@
 import { getCurrentUser } from "@/data/get-current-user";
 import { getRooms } from "@/features/dashboard/actions";
 import Content from "@/features/settings/components/content";
+import { getUsers } from "@/features/settings/user";
 import { redirect } from "next/navigation";
 
 const SettingsPage = async () => {
@@ -8,9 +9,9 @@ const SettingsPage = async () => {
 
   if (!currentUser) redirect("/auth/login");
 
-  const rooms = await getRooms();
+  const [rooms, users] = await Promise.all([getRooms(), getUsers()]);
 
-  return <Content rooms={rooms} />;
+  return <Content rooms={rooms} users={users} />;
 };
 
 export default SettingsPage;
