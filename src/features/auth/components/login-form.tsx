@@ -8,6 +8,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 import { InputForm } from "@/components/ui/input-form";
+import { Spinner } from "@/components/ui/spinner";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import z from "zod";
@@ -91,7 +92,11 @@ const LoginForm = () => {
           form="signin-form"
           className="flex w-full transform cursor-pointer items-center justify-center rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 py-3 font-bold  shadow-lg shadow-indigo-200 transition-all hover:-translate-y-0.5 active:scale-[0.98]"
         >
-          Entrar
+          {form.formState.isSubmitting ? (
+            <Spinner className="size-6" />
+          ) : (
+            "Entrar"
+          )}
         </button>
       </form>
 

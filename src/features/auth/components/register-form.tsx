@@ -2,6 +2,7 @@
 
 import { InputForm } from "@/components/ui/input-form";
 import { Label } from "@/components/ui/label";
+import { Spinner } from "@/components/ui/spinner";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
@@ -144,7 +145,11 @@ const RegisterForm = () => {
             form="register-form"
             className="flex w-full transform cursor-pointer items-center justify-center rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 py-3 font-bold shadow-lg shadow-indigo-200 transition-all hover:-translate-y-0.5 active:scale-[0.98]"
           >
-            Criar conta
+            {form.formState.isSubmitting ? (
+              <Spinner className="size-6" />
+            ) : (
+              "Criar conta"
+            )}
           </button>
         </div>
       </form>
