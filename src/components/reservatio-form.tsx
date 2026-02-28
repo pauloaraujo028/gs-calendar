@@ -38,6 +38,7 @@ import {
 import { getTimeOptions, isValidTimeRange } from "@/lib/reservation-utils";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import { Spinner } from "./ui/spinner";
 
 interface Room {
   id: string;
@@ -143,7 +144,11 @@ export default function ReservationForm({
         endTime: toDateTime(form.date, form.endTime).toISOString(),
       });
 
-      toast.success(isEditing ? "Reserva atualizada" : "Reserva criada");
+      toast.success(
+        isEditing
+          ? "Reserva atualizada com sucesso!"
+          : "Reserva criada com sucesso!",
+      );
       onClose();
     } catch (err) {
       toast.error(
@@ -305,11 +310,11 @@ export default function ReservationForm({
               </AlertDialogContent>
             </AlertDialog>
           )}
-          <Button variant="outline" onClick={onClose}>
+          <Button variant="outline" onClick={onClose} disabled={loading}>
             Fechar
           </Button>
           <Button onClick={handleSubmit} disabled={!canSubmit || loading}>
-            {isEditing ? "Salvar" : "Reservar"}
+            {loading ? <Spinner /> : isEditing ? "Salvar" : "Reservar"}
           </Button>
         </DialogFooter>
       </DialogContent>
