@@ -142,7 +142,7 @@ export default function UserManager({ users }: { users?: UserDTO[] }) {
       await createUser(data);
 
       toast.success("Usuário criado", {
-        description: `${data.name} criado com sucesso.`,
+        description: `Usuário ${data.name} criado com sucesso.`,
       });
       setDialogOpen(false);
     } catch {
@@ -153,6 +153,20 @@ export default function UserManager({ users }: { users?: UserDTO[] }) {
   const handleUpdate = async (data: FormData) => {
     if (!editingUser) return;
 
+    const changes: string[] = [];
+
+    if (editingUser.name !== data.name) {
+      changes.push(`Nome: ${editingUser.name} → ${data.name}`);
+    }
+
+    if (editingUser.email !== data.email) {
+      changes.push(`Email: ${editingUser.email} → ${data.email}`);
+    }
+
+    if (editingUser.role !== data.role) {
+      changes.push(`Perfil: ${editingUser.role} → ${data.role}`);
+    }
+
     try {
       await updateUser(editingUser.id, {
         name: data.name,
@@ -160,7 +174,9 @@ export default function UserManager({ users }: { users?: UserDTO[] }) {
         role: data.role,
       });
       toast.success("Usuário atualizado", {
-        description: `${editingUser.name} atualizado com sucesso.`,
+        description: changes.length
+          ? `Alterações realizadas:\n${changes.join("\n")}`
+          : "Nenhuma alteração foi feita.",
       });
       setDialogOpen(false);
       setEditingUser(undefined);
@@ -173,7 +189,7 @@ export default function UserManager({ users }: { users?: UserDTO[] }) {
     try {
       await deleteUser(user.id);
       toast.success("Usuário removido", {
-        description: `${user.name} removido com sucesso.`,
+        description: `Usuário ${user.name} removido com sucesso.`,
       });
     } catch {
       toast.error("Erro ao remover usuário");

@@ -22,11 +22,17 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" suppressHydrationWarning>
       <body
-        className={`${inter.className}  antialiased`}
+        className={`${inter.className} antialiased`}
         cz-shortcut-listen="true"
       >
         {children}
-        <Toaster />
+        <Toaster
+          toastOptions={{
+            classNames: {
+              default: "!bg-primary !text-white",
+            },
+          }}
+        />
       </body>
     </html>
   );
