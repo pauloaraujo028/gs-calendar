@@ -33,8 +33,8 @@ O **GS Calendar** nasceu para resolver esse problema. Com ele, qualquer colabora
 
 - [Índice](#índice)
 - [Sobre o Projeto](#sobre-o-projeto)
+- [Funcionalidades](#funcionalidades)
 - [Stack Tecnológica](#stack-tecnológica)
-- [Características](#características)
 - [Construído com](#construído-com)
 - [Começando](#começando)
   - [Pré-requisito](#pré-requisito)
