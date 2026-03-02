@@ -83,6 +83,7 @@ const Content = ({ rooms, reservations }: Props) => {
               <Input
                 type="date"
                 value={formatDateInput(selectedDate)}
+                min={new Date().toISOString().slice(0, 10)}
                 onChange={(e) => {
                   const value = e.target.value;
                   if (!value) return;

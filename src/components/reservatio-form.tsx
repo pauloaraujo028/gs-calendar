@@ -50,7 +50,7 @@ interface Room {
 interface EditReservation {
   id: string;
   roomId: string;
-  userId: string;
+  userId: string | null;
   title: string;
   description?: string | null;
   startTime: Date;
@@ -83,7 +83,6 @@ export default function ReservationForm({
   const isOwner = editReservation?.userId === currentUserId;
   const isAdmin = currentUserRole === "ADMIN";
 
-  const canCreate = !isEditing;
   const canEdit = isEditing && (isOwner || isAdmin);
 
   const [rooms, setRooms] = useState<Room[]>([]);
@@ -138,8 +137,22 @@ export default function ReservationForm({
     return new Date(`${date}T${time}:00`);
   }
 
+  const now = new Date();
+
+  const startDateTime =
+    form.date && form.startTime ? toDateTime(form.date, form.startTime) : null;
+
+  const isPastDateTime = startDateTime
+    ? startDateTime.getTime() < now.getTime()
+    : false;
+
   const validTime = isValidTimeRange(form.startTime, form.endTime);
-  const canSubmit = form.title.trim() && form.roomId && form.date && validTime;
+  const canSubmit =
+    form.title.trim() &&
+    form.roomId &&
+    form.date &&
+    validTime &&
+    !isPastDateTime;
 
   async function handleSubmit() {
     if (!canSubmit) return;
@@ -182,6 +195,31 @@ export default function ReservationForm({
     }
   }
 
+  function filterPastTimes(times: string[]) {
+    if (!form.date) return times;
+
+    const today = new Date();
+    const selectedDate = new Date(form.date + "T00:00:00");
+
+    if (selectedDate.toDateString() !== today.toDateString()) {
+      return times;
+    }
+
+    const nowMinutes = today.getHours() * 60 + today.getMinutes();
+
+    return times.filter((time) => {
+      const [h, m] = time.split(":").map(Number);
+      const timeMinutes = h * 60 + m;
+
+      return timeMinutes > nowMinutes;
+    });
+  }
+
+  const filteredTimeOptions = filterPastTimes(timeOptions);
+  const filteredEndTimeOptions = filteredTimeOptions.filter(
+    (t) => t > form.startTime,
+  );
+
   return (
     <Dialog open={open} onOpenChange={(v) => !v && onClose()}>
       <DialogContent className="sm:max-w-md">
@@ -220,6 +258,7 @@ export default function ReservationForm({
             <Label>Data</Label>
             <Input
               type="date"
+              min={new Date().toISOString().slice(0, 10)}
               value={form.date}
               onChange={(e) => setForm((f) => ({ ...f, date: e.target.value }))}
               disabled={isEditing && !canEdit}
@@ -238,7 +277,7 @@ export default function ReservationForm({
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  {timeOptions.map((t) => (
+                  {filteredTimeOptions.map((t) => (
                     <SelectItem key={t} value={t}>
                       {t}
                     </SelectItem>
@@ -258,7 +297,7 @@ export default function ReservationForm({
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  {timeOptions.map((t) => (
+                  {filteredEndTimeOptions.map((t) => (
                     <SelectItem key={t} value={t}>
                       {t}
                     </SelectItem>
@@ -267,6 +306,12 @@ export default function ReservationForm({
               </Select>
             </div>
           </div>
+
+          {isPastDateTime && (
+            <p className="text-xs text-destructive">
+              Não é possível agendar para data/horário que já passou.
+            </p>
+          )}
 
           {!validTime && (
             <p className="text-xs text-destructive">
