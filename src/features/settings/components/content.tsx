@@ -106,7 +106,7 @@ export default function Content({
             {rooms.length === 0 && (
               <Card>
                 <CardContent className="py-12 text-center text-muted-foreground">
-                  Nenhuma sala cadastrada. Clique em{" "}
+                  Nenhuma sala cadastrada. Clique em
                   <strong className="mr-1">Nova Sala</strong>
                   para começar.
                 </CardContent>

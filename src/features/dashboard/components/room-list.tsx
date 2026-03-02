@@ -1,12 +1,14 @@
 "use client";
 
 import { Room } from "@/lib/generated/prisma/client";
-import { Projector, Tv, Users, Wind } from "lucide-react";
+import { Bluetooth, Mic, Tv, Users, Webcam, Wind } from "lucide-react";
 
 const resourceIcons: Record<string, React.ReactNode> = {
   TV: <Tv className="h-3.5 w-3.5" />,
   "Ar-condicionado": <Wind className="h-3.5 w-3.5" />,
-  Projetor: <Projector className="h-3.5 w-3.5" />,
+  Webcam: <Webcam className="h-3.5 w-3.5" />,
+  "Microfone fixo": <Mic className="h-3.5 w-3.5" />,
+  "Microfone bluetooth": <Bluetooth className="h-3.5 w-3.5" />,
 };
 
 interface RoomCardProps {
