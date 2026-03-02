@@ -1,6 +1,6 @@
 import { Reservation, Room } from "@/lib/generated/prisma/client";
+import { BUSINESS_HOURS } from "@/lib/reservation-utils";
 import { useMemo } from "react";
-import { BUSINESS_HOURS } from "../lib/reservation-utils";
 
 interface WeeklyCalendarProps {
   rooms: Room[];

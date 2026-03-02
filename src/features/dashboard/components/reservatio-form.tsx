@@ -30,16 +30,17 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { getRooms } from "@/features/dashboard/actions";
+
+import { Spinner } from "@/components/ui/spinner";
 import {
   cancelReservationAction,
   saveReservationAction,
-} from "@/features/dashboard/reservation";
+} from "@/features/dashboard/actions";
+import { getRooms } from "@/features/settings/actions";
 import { useSession } from "@/lib/auth-client";
 import { getTimeOptions, isValidTimeRange } from "@/lib/reservation-utils";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { Spinner } from "./ui/spinner";
 
 interface Room {
   id: string;

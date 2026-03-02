@@ -2,12 +2,12 @@
 
 import { useState } from "react";
 
-import ReservationForm from "@/components/reservatio-form";
-import ReservationList from "@/components/reservation-list";
-import TimeGrid from "@/components/time-grid";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import WeeklyCalendar from "@/components/weekly-calendar";
+import ReservationForm from "@/features/dashboard/components/reservatio-form";
+import ReservationList from "@/features/dashboard/components/reservation-list";
+import TimeGrid from "@/features/dashboard/components/time-grid";
+import WeeklyCalendar from "@/features/dashboard/components/weekly-calendar";
 import { Reservation, Room } from "@/lib/generated/prisma/client";
 import { formatDate } from "@/lib/reservation-utils";
 import { formatDateInput } from "@/lib/utils";

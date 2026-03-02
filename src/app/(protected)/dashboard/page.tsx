@@ -1,7 +1,7 @@
 import { getCurrentUser } from "@/data/get-current-user";
-import { getRooms } from "@/features/dashboard/actions";
+import { getReservations } from "@/features/dashboard/actions";
 import Content from "@/features/dashboard/components/content";
-import { getReservations } from "@/features/dashboard/reservation";
+import { getRooms } from "@/features/settings/actions";
 import { redirect } from "next/navigation";
 
 export default async function Page() {
