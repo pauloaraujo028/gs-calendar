@@ -84,7 +84,33 @@ export async function cancelReservationAction(id: string) {
     headers: await headers(),
   });
 
-  if (!session) throw new Error("Não autorizado");
+  if (!session) {
+    throw new Error("Não autorizado");
+  }
+
+  const reservation = await db.reservation.findUnique({
+    where: { id },
+    select: {
+      id: true,
+      userId: true,
+      status: true,
+    },
+  });
+
+  if (!reservation) {
+    throw new Error("Reserva não encontrada");
+  }
+
+  const isOwner = reservation.userId === session.user.id;
+  const isAdmin = session.user.role === "ADMIN";
+
+  if (!isOwner && !isAdmin) {
+    throw new Error("Você não tem permissão para cancelar esta reserva");
+  }
+
+  if (reservation.status === "CANCELLED") {
+    throw new Error("Esta reserva já está cancelada");
+  }
 
   await db.reservation.update({
     where: { id },

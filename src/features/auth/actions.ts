@@ -2,6 +2,7 @@
 
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 import z from "zod";
 import { loginSchema, registerSchema } from "./schemas";
 
@@ -24,11 +25,10 @@ export async function Login(data: z.infer<typeof loginSchema>) {
       },
       headers: await headers(),
     });
-
-    return { success: true };
   } catch {
     return { error: "Email ou senha incorretos" };
   }
+  redirect("/dashboard");
 }
 
 export async function Register(data: z.infer<typeof registerSchema>) {

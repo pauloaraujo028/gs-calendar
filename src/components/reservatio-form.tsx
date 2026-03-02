@@ -35,6 +35,7 @@ import {
   cancelReservationAction,
   saveReservationAction,
 } from "@/features/dashboard/reservation";
+import { useSession } from "@/lib/auth-client";
 import { getTimeOptions, isValidTimeRange } from "@/lib/reservation-utils";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -49,6 +50,7 @@ interface Room {
 interface EditReservation {
   id: string;
   roomId: string;
+  userId: string;
   title: string;
   description?: string | null;
   startTime: Date;
@@ -74,6 +76,15 @@ export default function ReservationForm({
 }: Props) {
   const timeOptions = getTimeOptions();
   const isEditing = !!editReservation;
+
+  const { data: session } = useSession();
+  const currentUserId = session?.user.id;
+  const currentUserRole = session?.user.role;
+  const isOwner = editReservation?.userId === currentUserId;
+  const isAdmin = currentUserRole === "ADMIN";
+
+  const canCreate = !isEditing;
+  const canEdit = isEditing && (isOwner || isAdmin);
 
   const [rooms, setRooms] = useState<Room[]>([]);
   const [loading, setLoading] = useState(false);
@@ -190,6 +201,7 @@ export default function ReservationForm({
             <Select
               value={form.roomId}
               onValueChange={(v) => setForm((f) => ({ ...f, roomId: v }))}
+              disabled={isEditing && !canEdit}
             >
               <SelectTrigger className="w-full">
                 <SelectValue placeholder="Selecione uma sala…" />
@@ -210,6 +222,7 @@ export default function ReservationForm({
               type="date"
               value={form.date}
               onChange={(e) => setForm((f) => ({ ...f, date: e.target.value }))}
+              disabled={isEditing && !canEdit}
             />
           </div>
 
@@ -219,6 +232,7 @@ export default function ReservationForm({
               <Select
                 value={form.startTime}
                 onValueChange={(v) => setForm((f) => ({ ...f, startTime: v }))}
+                disabled={isEditing && !canEdit}
               >
                 <SelectTrigger className="w-full">
                   <SelectValue />
@@ -238,6 +252,7 @@ export default function ReservationForm({
               <Select
                 value={form.endTime}
                 onValueChange={(v) => setForm((f) => ({ ...f, endTime: v }))}
+                disabled={isEditing && !canEdit}
               >
                 <SelectTrigger className="w-full">
                   <SelectValue />
@@ -267,6 +282,7 @@ export default function ReservationForm({
                 setForm((f) => ({ ...f, title: e.target.value }))
               }
               placeholder="Ex: Alinhamento de equipe"
+              disabled={isEditing && !canEdit}
             />
           </div>
 
@@ -279,12 +295,13 @@ export default function ReservationForm({
               }
               rows={2}
               placeholder="Informações adicionais..."
+              disabled={isEditing && !canEdit}
             />
           </div>
         </div>
 
         <DialogFooter className="flex-col gap-2 sm:flex-row">
-          {isEditing && (
+          {canEdit && isEditing && (
             <AlertDialog>
               <AlertDialogTrigger asChild>
                 <Button variant="destructive" className="sm:mr-auto">
@@ -313,9 +330,11 @@ export default function ReservationForm({
           <Button variant="outline" onClick={onClose} disabled={loading}>
             Fechar
           </Button>
-          <Button onClick={handleSubmit} disabled={!canSubmit || loading}>
-            {loading ? <Spinner /> : isEditing ? "Salvar" : "Reservar"}
-          </Button>
+          {(!isEditing || canEdit) && (
+            <Button onClick={handleSubmit} disabled={!canSubmit || loading}>
+              {loading ? <Spinner /> : isEditing ? "Salvar" : "Reservar"}
+            </Button>
+          )}
         </DialogFooter>
       </DialogContent>
     </Dialog>
