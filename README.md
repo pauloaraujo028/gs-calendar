@@ -49,9 +49,9 @@ O **GS Calendar** é um sistema de reserva de salas de reunião desenvolvido par
 
 A solução oferece uma interface moderna e intuitiva onde os colaboradores conseguem verificar a disponibilidade das salas em tempo real, fazer reservas com poucos cliques e garantir que o restante da equipe já visualize imediatamente o horário como ocupado. Sem planilhas compartilhadas, sem grupos de WhatsApp, sem conflitos.
 
- <!-- <div style="border: 2px solid #8063f3; padding: 10px; border-radius: 10px;">
-  <img width="100%" alt="gs-calendar-preview" src="LINK_DA_SUA_IMAGEM_AQUI" />
- </div> -->
+ <div style="border: 2px solid #8063f3; padding: 10px; border-radius: 10px;">
+  <img width="100%" alt="gs-calendar-preview" src="https://github.com/user-attachments/assets/fccafe53-6f75-4f9d-b055-278981e44e89" />
+ </div>
 
  ## Funcionalidades
 
