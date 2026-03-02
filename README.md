@@ -1,36 +1,205 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<div align="center">
+  <h1 align="center" style="color: #8063f3; font-size: 50px;">GS Calendar 📅</h1>
+</div>
 
-## Getting Started
+<p align="center">
+  <em>Reserva inteligente de salas de reunião — elimine conflitos de agendamento na sua empresa.</em>
+</p>
 
-First, run the development server:
+<p align="center">
+  <img src="https://img.shields.io/github/last-commit/pauloaraujo028/gs-calendar?style=default&logo=git&logoColor=white&color=8063f3" alt="last-commit">
+  <img src="https://img.shields.io/github/languages/top/pauloaraujo028/gs-calendar?style=default&color=8063f3" alt="repo-top-language">
+  <img src="https://img.shields.io/github/languages/count/pauloaraujo028/gs-calendar?style=default&color=8063f3" alt="repo-language-count">
+</p>
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+<div align="center">
+  <h3 align="center">
+    <br />
+    <a href="https://gs-calendar.vercel.app/" target="_blank">🌐 Ver Online</a>
+    ·
+    <a href="https://github.com/pauloaraujo028/gs-calendar/issues/new" target="_blank">🐛 Relatar Bug</a>
+  </h3>
+</div>
+
+<br>
+
+## O Problema que Resolve
+
+Em ambientes corporativos, a falta de um sistema centralizado para reserva de salas gera conflitos frequentes — duas equipes marcando a mesma sala no mesmo horário, reuniões canceladas de última hora e perda de produtividade.
+
+O **GS Calendar** nasceu para resolver esse problema. Com ele, qualquer colaborador pode reservar uma sala de reunião e visualizar em tempo real quais horários e salas já estão ocupados. Chega de double booking, chega de surpresas na porta da sala.
+
+## Índice
+
+- [Índice](#índice)
+- [Sobre o Projeto](#sobre-o-projeto)
+- [Stack Tecnológica](#stack-tecnológica)
+- [Características](#características)
+- [Construído com](#construído-com)
+- [Começando](#começando)
+  - [Pré-requisito](#pré-requisito)
+  - [Instalação](#instalação)
+  - [Uso](#uso)
+- [Contribuição](#contribuição)
+- [Contato](#contato)
+
+## Sobre o Projeto
+
+O **GS Calendar** é um sistema de reserva de salas de reunião desenvolvido para resolver um problema real: a desorganização de horários em ambientes corporativos.
+
+A solução oferece uma interface moderna e intuitiva onde os colaboradores conseguem verificar a disponibilidade das salas em tempo real, fazer reservas com poucos cliques e garantir que o restante da equipe já visualize imediatamente o horário como ocupado. Sem planilhas compartilhadas, sem grupos de WhatsApp, sem conflitos.
+
+ <!-- <div style="border: 2px solid #8063f3; padding: 10px; border-radius: 10px;">
+  <img width="100%" alt="gs-calendar-preview" src="LINK_DA_SUA_IMAGEM_AQUI" />
+ </div> -->
+
+ ## Funcionalidades
+
+**Reserva de Salas**
+- [x] Reserva de salas por data, horário de início e fim
+- [x] Visualização de disponibilidade em tempo real
+- [x] Prevenção automática de conflitos de agendamento
+- [x] Criação, edição e cancelamento de reservas
+
+**Calendário & Visualização**
+- [x] Visualização mensal, semanal e diária
+- [x] Categorização de compromissos
+- [x] Interface responsiva para desktop e mobile
+
+**Autenticação & Segurança**
+- [x] Cadastro e login seguro de usuários
+- [x] Proteção de rotas e sessões autenticadas
+
+## Stack Tecnológica
+
+| Tecnologia | Descrição |
+|---|---|
+| **[Next.js](https://nextjs.org/)** | Framework React com SSR/SSG e otimizações avançadas de performance |
+| **[Better Auth](https://www.better-auth.com/)** | Autenticação completa e segura para aplicações modernas |
+| **[Prisma](https://www.prisma.io/)** | ORM robusto para consultas rápidas e intuitivas ao banco de dados |
+| **[Tailwind CSS](https://tailwindcss.com/)** | Framework CSS utilitário para layouts responsivos e customizáveis |
+| **[Shadcn/ui](https://ui.shadcn.com/)** | Componentes pré-construídos e acessíveis baseados em Tailwind |
+| **[React Hook Form](https://react-hook-form.com/)** | Gerenciamento de formulários performático e flexível |
+| **[Zod](https://zod.dev/)** | Validação de esquemas TypeScript-first |
+
+
+
+## Construído com
+
+- ![Next JS](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white)
+- ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
+- ![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
+- ![Prisma](https://img.shields.io/badge/Prisma-3982CE?style=for-the-badge&logo=Prisma&logoColor=white)
+- ![Shadcn](https://img.shields.io/badge/shadcn/ui-black?style=for-the-badge&logo=&logoColor=white)
+
+## Começando
+
+### Pré-requisito
+
+Antes de começar a usar o projeto, certifique-se de que seu ambiente de execução atenda aos seguintes requisitos:
+
+- **Node.js** (versão 18 ou superior)
+  - Baixe e instale o Node.js em **[nodejs.org](https://nodejs.org/)**.
+- **Git** (para clonar o repositório)
+  - Baixe e instale o Git em **[git-scm.com](https://git-scm.com/)**.
+- **Banco de Dados Relacional** (como PostgreSQL, MySQL ou SQLite)
+  - Recomenda-se o uso do PostgreSQL.
+  - Para SQLite, não é necessário configurar um servidor de banco de dados.
+- **Gerenciador de Pacotes**
+  - npm (já incluído no Node.js)
+  - pnpm (opcional, pode ser instalado com `npm install -g pnpm@latest-10`)
+
+### Instalação
+
+Instale o projeto seguindo estas etapas:
+
+**1. Clone o repositório:**
+
+```sh
+  git clone https://github.com/pauloaraujo028/gs-calendar
+  cd gs-calendar
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+**2. Instale as dependências:**
+```sh
+  npm install
+    # ou
+  pnpm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+**3. Configure as variáveis de ambiente:**
+ - Crie um arquivo `.env` na raiz do projeto.
+   - Copie as variáveis de ambiente do arquivo `.env.example` para o arquivo `.env`.
+   - Edite o `.env` com suas configurações (DATABASE_URL, BETTER_AUTH_SECRET, etc.).
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+**4. Configure o banco de dados com Prisma:**
+```sh
+  npx prisma generate
+  npx prisma migrate dev
+    # ou
+  pnpm dlx prisma generate
+  pnpm dlx prisma migrate dev
+```
 
-## Learn More
+### Uso
 
-To learn more about Next.js, take a look at the following resources:
+Inicie o servidor de desenvolvimento:
+```sh
+  npm run dev
+    # ou
+  pnpm run dev
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+  - Acesse [http://localhost:3000](http://localhost:3000) no seu navegador.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Contribuição
 
-## Deploy on Vercel
+Contribuições são bem-vindas! Veja como participar:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **💬 [Discussões](https://github.com/pauloaraujo028/gs-calendar/discussions)** — Compartilhe ideias e feedback
+- **🐛 [Issues](https://github.com/pauloaraujo028/gs-calendar/issues)** — Reporte bugs ou solicite novas funcionalidades
+- **💡 [Pull Requests](https://github.com/pauloaraujo028/gs-calendar/blob/main/CONTRIBUTING.md)** — Envie melhorias diretamente
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+<details open>
+<summary>Passo a passo para contribuir</summary>
+
+1. **Faça o Fork do Repositório**: Comece fazendo o fork do repositório do projeto para sua conta do github.
+2. **Clonar Localmente**: Clone o repositório em sua máquina local usando um cliente git.
+   ```sh
+   git clone https://github.com/pauloaraujo028/nextjs-builder
+   ```
+3. **Criar uma Nova Branch**: Sempre trabalhe em um novo branch, dando-lhe um nome descritivo.
+   ```sh
+   git checkout -b novo recurso-x
+   ```
+4. **Faça suas alterações**: desenvolva e teste suas alterações localmente.
+5. **Faça commit de suas Alterações**: Confirme com uma mensagem clara descrevendo suas atualizações.
+   ```sh
+   git commit -m 'Novo recurso implementado x.'
+   ```
+6. **Envie para o Github**: Envie as alterações para seu repositório.
+   ```sh
+   git push origin novo recurso-x
+   ```
+7. **Enviar um Pull Request**: Crie um PR no repositório original do projeto. Descreva claramente as mudanças e suas motivações.
+8. **Revisão**: Depois que seu PR for revisado e aprovado, ele será incorporado ao ramo principal. Parabéns pela sua contribuição!
+</details>
+
+<details open>
+<summary>Gráfico do Contribuidor</summary>
+<br>
+<p align="left">
+   <a href="https://github.com{/pauloaraujo028/gs-calendar/}graphs/contributors">
+      <img src="https://contrib.rocks/image?repo=pauloaraujo028/gs-calendar">
+   </a>
+</p>
+</details>
+
+## Contato
+
+**Paulo Araújo Dev**
+
+[![Portfolio](https://img.shields.io/badge/Portfolio-%23000000.svg?style=for-the-badge&logo=firefox&logoColor=#FF7139)](https://pauloaraujo-portfolio.vercel.app/)
+[![LinkedIn](https://img.shields.io/badge/linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/pauloaraujo028/)
+[![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/pauloaraujo028)
+[![Gmail](https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:pauloaraujo.phz@gmail.com)
