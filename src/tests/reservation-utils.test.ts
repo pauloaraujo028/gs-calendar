@@ -1,6 +1,7 @@
 import {
   checkTimeConflict,
   formatDate,
+  generateTimeSlots,
   getTimeOptions,
   isValidTimeRange,
   timeToMinutes,
@@ -123,5 +124,33 @@ describe("checkTimeConflict", () => {
     );
 
     expect(result.hasConflict).toBe(false);
+  });
+});
+
+describe("generateTimeSlots", () => {
+  it("deve gerar slots de 30 minutos", () => {
+    const reservations: Array<{
+      id: string;
+      title: string;
+      description: string | null;
+      startTime: Date;
+      endTime: Date;
+      status: "ACTIVE" | "CANCELLED";
+      roomId: string;
+      userId: string | null;
+      createdAt: Date;
+      updatedAt: Date;
+    }> = [];
+
+    const roomId = "room-1";
+
+    const selectedDate = new Date("2026-03-05");
+
+    const slots = generateTimeSlots(reservations, roomId, selectedDate);
+
+    expect(slots.length).toBeGreaterThan(0);
+
+    expect(slots[0].time).toBe("07:00");
+    expect(slots[1].time).toBe("07:30");
   });
 });
