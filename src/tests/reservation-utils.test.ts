@@ -1,4 +1,6 @@
 import {
+  checkTimeConflict,
+  formatDate,
   getTimeOptions,
   isValidTimeRange,
   timeToMinutes,
@@ -73,5 +75,53 @@ describe("getTimeOptions", () => {
     const options = getTimeOptions();
 
     expect(options).toContain("17:00");
+  });
+});
+
+describe("formatDate", () => {
+  it("deve formatar data para pt-BR", () => {
+    const date = new Date(2026, 2, 5);
+
+    const result = formatDate(date);
+
+    expect(result).toBe("05/03/2026");
+  });
+});
+
+describe("checkTimeConflict", () => {
+  const date = new Date(2026, 2, 5);
+
+  const reservations = [
+    {
+      id: "1",
+      roomId: "room1",
+      startTime: new Date("2026-03-05T08:00:00"),
+      endTime: new Date("2026-03-05T09:00:00"),
+    },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  ] as any;
+
+  it("deve detectar conflito de horário", () => {
+    const result = checkTimeConflict(
+      reservations,
+      "room1",
+      date,
+      "08:30",
+      "09:30",
+    );
+
+    expect(result.hasConflict).toBe(true);
+  });
+
+  it("não deve ter conflito quando horários não se sobrepõem", () => {
+    const result = checkTimeConflict(
+      reservations,
+      "room1",
+      date,
+      "09:30",
+      "10:00",
+    );
+
+    expect(result.hasConflict).toBe(false);
   });
 });
