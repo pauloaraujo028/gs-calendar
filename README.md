@@ -31,11 +31,15 @@ O **GS Calendar** nasceu para resolver esse problema. Com ele, qualquer colabora
 
 ## Índice
 
+- [O Problema que Resolve](#o-problema-que-resolve)
 - [Índice](#índice)
 - [Sobre o Projeto](#sobre-o-projeto)
 - [Funcionalidades](#funcionalidades)
 - [Stack Tecnológica](#stack-tecnológica)
 - [Construído com](#construído-com)
+- [Testes](#testes)
+  - [Executar os testes](#executar-os-testes)
+  - [O que é testado](#o-que-é-testado)
 - [Começando](#começando)
   - [Pré-requisito](#pré-requisito)
   - [Instalação](#instalação)
@@ -53,36 +57,46 @@ A solução oferece uma interface moderna e intuitiva onde os colaboradores cons
   <img width="100%" alt="gs-calendar-preview" src="https://github.com/user-attachments/assets/fccafe53-6f75-4f9d-b055-278981e44e89" />
  </div>
 
- ## Funcionalidades
+## Funcionalidades
 
 **Reserva de Salas**
+
 - [x] Reserva de salas por data, horário de início e fim
 - [x] Visualização de disponibilidade em tempo real
 - [x] Prevenção automática de conflitos de agendamento
 - [x] Criação, edição e cancelamento de reservas
 
 **Calendário & Visualização**
+
 - [x] Visualização mensal, semanal e diária
 - [x] Categorização de compromissos
 - [x] Interface responsiva para desktop e mobile
 
 **Autenticação & Segurança**
+
 - [x] Cadastro e login seguro de usuários
 - [x] Proteção de rotas e sessões autenticadas
 
+**Qualidade & Testes**
+
+- [x] Testes unitários com Jest
+- [x] Conversão e validação de horários (`timeToMinutes`, `isValidTimeRange`)
+- [x] Detecção de conflitos de reserva (`checkTimeConflict`)
+- [x] Geração de slots e opções de horário (`generateTimeSlots`, `getTimeOptions`)
+- [x] Formatação de datas em pt-BR (`formatDate`)
+
 ## Stack Tecnológica
 
-| Tecnologia | Descrição |
-|---|---|
-| **[Next.js](https://nextjs.org/)** | Framework React com SSR/SSG e otimizações avançadas de performance |
-| **[Better Auth](https://www.better-auth.com/)** | Autenticação completa e segura para aplicações modernas |
-| **[Prisma](https://www.prisma.io/)** | ORM robusto para consultas rápidas e intuitivas ao banco de dados |
-| **[Tailwind CSS](https://tailwindcss.com/)** | Framework CSS utilitário para layouts responsivos e customizáveis |
-| **[Shadcn/ui](https://ui.shadcn.com/)** | Componentes pré-construídos e acessíveis baseados em Tailwind |
-| **[React Hook Form](https://react-hook-form.com/)** | Gerenciamento de formulários performático e flexível |
-| **[Zod](https://zod.dev/)** | Validação de esquemas TypeScript-first |
-
-
+| Tecnologia                                          | Descrição                                                          |
+| --------------------------------------------------- | ------------------------------------------------------------------ |
+| **[Next.js](https://nextjs.org/)**                  | Framework React com SSR/SSG e otimizações avançadas de performance |
+| **[Better Auth](https://www.better-auth.com/)**     | Autenticação completa e segura para aplicações modernas            |
+| **[Prisma](https://www.prisma.io/)**                | ORM robusto para consultas rápidas e intuitivas ao banco de dados  |
+| **[Tailwind CSS](https://tailwindcss.com/)**        | Framework CSS utilitário para layouts responsivos e customizáveis  |
+| **[Shadcn/ui](https://ui.shadcn.com/)**             | Componentes pré-construídos e acessíveis baseados em Tailwind      |
+| **[React Hook Form](https://react-hook-form.com/)** | Gerenciamento de formulários performático e flexível               |
+| **[Zod](https://zod.dev/)**                         | Validação de esquemas TypeScript-first                             |
+| **[Jest](https://jestjs.io/)**                      | Framework de testes unitários em JavaScript/TypeScript             |
 
 ## Construído com
 
@@ -91,6 +105,43 @@ A solução oferece uma interface moderna e intuitiva onde os colaboradores cons
 - ![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
 - ![Prisma](https://img.shields.io/badge/Prisma-3982CE?style=for-the-badge&logo=Prisma&logoColor=white)
 - ![Shadcn](https://img.shields.io/badge/shadcn/ui-black?style=for-the-badge&logo=&logoColor=white)
+- ![Jest](https://img.shields.io/badge/Jest-C21325?style=for-the-badge&logo=jest&logoColor=white)
+
+## Testes
+
+O projeto utiliza **[Jest](https://jestjs.io/)** para garantir a confiabilidade das funcionalidades principais.
+
+### Executar os testes
+
+```sh
+# Rodar todos os testes
+npm run test
+  # ou
+pnpm run test
+
+# Rodar em modo watch (reexecuta ao salvar)
+npm run test:watch
+  # ou
+pnpm run test:watch
+
+# Gerar relatório de cobertura
+npm run test:coverage
+  # ou
+pnpm run test:coverage
+```
+
+### O que é testado
+
+Todos os testes estão em `reservation-utils.test.ts` e cobrem as funções utilitárias do arquivo `lib/reservation-utils.ts`:
+
+| Função              | Casos de teste                                                        |
+| ------------------- | --------------------------------------------------------------------- |
+| `timeToMinutes`     | Conversão de string `HH:MM` para minutos totais                       |
+| `isValidTimeRange`  | Valida faixa mínima de 30min, horário mínimo 07:00 e ordem início/fim |
+| `getTimeOptions`    | Geração da lista de opções de horário (inclui 07:00 até 17:00+)       |
+| `formatDate`        | Formatação de datas no padrão pt-BR (`dd/mm/aaaa`)                    |
+| `checkTimeConflict` | Detecção de sobreposição de reservas por sala e data                  |
+| `generateTimeSlots` | Geração de slots de 30 em 30 minutos a partir de 07:00                |
 
 ## Começando
 
@@ -121,6 +172,7 @@ Instale o projeto seguindo estas etapas:
 ```
 
 **2. Instale as dependências:**
+
 ```sh
   npm install
     # ou
@@ -128,11 +180,13 @@ Instale o projeto seguindo estas etapas:
 ```
 
 **3. Configure as variáveis de ambiente:**
- - Crie um arquivo `.env` na raiz do projeto.
-   - Copie as variáveis de ambiente do arquivo `.env.example` para o arquivo `.env`.
-   - Edite o `.env` com suas configurações (DATABASE_URL, BETTER_AUTH_SECRET, etc.).
+
+- Crie um arquivo `.env` na raiz do projeto.
+  - Copie as variáveis de ambiente do arquivo `.env.example` para o arquivo `.env`.
+  - Edite o `.env` com suas configurações (DATABASE_URL, BETTER_AUTH_SECRET, etc.).
 
 **4. Configure o banco de dados com Prisma:**
+
 ```sh
   npx prisma generate
   npx prisma migrate dev
@@ -144,13 +198,14 @@ Instale o projeto seguindo estas etapas:
 ### Uso
 
 Inicie o servidor de desenvolvimento:
+
 ```sh
   npm run dev
     # ou
   pnpm run dev
 ```
 
-  - Acesse [http://localhost:3000](http://localhost:3000) no seu navegador.
+- Acesse [http://localhost:3000](http://localhost:3000) no seu navegador.
 
 ## Contribuição
 
