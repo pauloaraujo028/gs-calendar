@@ -1,5 +1,5 @@
 import { getCurrentUser } from "@/data/get-current-user";
-import { getRooms } from "@/features/dashboard/actions";
+import { getRooms } from "@/features/settings/actions";
 import Content from "@/features/settings/components/content";
 import { getUsers } from "@/features/settings/user";
 import { redirect } from "next/navigation";

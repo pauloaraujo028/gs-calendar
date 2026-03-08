@@ -27,11 +27,10 @@ import { toast } from "sonner";
 
 const AVAILABLE_RESOURCES = [
   "TV",
-  "Projetor",
   "Ar-condicionado",
-  "Quadro branco",
   "Webcam",
-  "Microfone",
+  "Microfone fixo",
+  "Microfone bluetooth",
 ];
 
 export default function RoomEditor({

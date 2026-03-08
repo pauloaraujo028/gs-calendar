@@ -30,15 +30,17 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { getRooms } from "@/features/dashboard/actions";
+
+import { Spinner } from "@/components/ui/spinner";
 import {
   cancelReservationAction,
   saveReservationAction,
-} from "@/features/dashboard/reservation";
+} from "@/features/dashboard/actions";
+import { getRooms } from "@/features/settings/actions";
+import { useSession } from "@/lib/auth-client";
 import { getTimeOptions, isValidTimeRange } from "@/lib/reservation-utils";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { Spinner } from "./ui/spinner";
 
 interface Room {
   id: string;
@@ -49,6 +51,7 @@ interface Room {
 interface EditReservation {
   id: string;
   roomId: string;
+  userId: string | null;
   title: string;
   description?: string | null;
   startTime: Date;
@@ -74,6 +77,14 @@ export default function ReservationForm({
 }: Props) {
   const timeOptions = getTimeOptions();
   const isEditing = !!editReservation;
+
+  const { data: session } = useSession();
+  const currentUserId = session?.user.id;
+  const currentUserRole = session?.user.role;
+  const isOwner = editReservation?.userId === currentUserId;
+  const isAdmin = currentUserRole === "ADMIN";
+
+  const canEdit = isEditing && (isOwner || isAdmin);
 
   const [rooms, setRooms] = useState<Room[]>([]);
   const [loading, setLoading] = useState(false);
@@ -127,8 +138,22 @@ export default function ReservationForm({
     return new Date(`${date}T${time}:00`);
   }
 
+  const now = new Date();
+
+  const startDateTime =
+    form.date && form.startTime ? toDateTime(form.date, form.startTime) : null;
+
+  const isPastDateTime = startDateTime
+    ? startDateTime.getTime() < now.getTime()
+    : false;
+
   const validTime = isValidTimeRange(form.startTime, form.endTime);
-  const canSubmit = form.title.trim() && form.roomId && form.date && validTime;
+  const canSubmit =
+    form.title.trim() &&
+    form.roomId &&
+    form.date &&
+    validTime &&
+    !isPastDateTime;
 
   async function handleSubmit() {
     if (!canSubmit) return;
@@ -171,6 +196,31 @@ export default function ReservationForm({
     }
   }
 
+  function filterPastTimes(times: string[]) {
+    if (!form.date) return times;
+
+    const today = new Date();
+    const selectedDate = new Date(form.date + "T00:00:00");
+
+    if (selectedDate.toDateString() !== today.toDateString()) {
+      return times;
+    }
+
+    const nowMinutes = today.getHours() * 60 + today.getMinutes();
+
+    return times.filter((time) => {
+      const [h, m] = time.split(":").map(Number);
+      const timeMinutes = h * 60 + m;
+
+      return timeMinutes > nowMinutes;
+    });
+  }
+
+  const filteredTimeOptions = filterPastTimes(timeOptions);
+  const filteredEndTimeOptions = filteredTimeOptions.filter(
+    (t) => t > form.startTime,
+  );
+
   return (
     <Dialog open={open} onOpenChange={(v) => !v && onClose()}>
       <DialogContent className="sm:max-w-md">
@@ -190,6 +240,7 @@ export default function ReservationForm({
             <Select
               value={form.roomId}
               onValueChange={(v) => setForm((f) => ({ ...f, roomId: v }))}
+              disabled={isEditing && !canEdit}
             >
               <SelectTrigger className="w-full">
                 <SelectValue placeholder="Selecione uma sala…" />
@@ -208,8 +259,10 @@ export default function ReservationForm({
             <Label>Data</Label>
             <Input
               type="date"
+              min={new Date().toISOString().slice(0, 10)}
               value={form.date}
               onChange={(e) => setForm((f) => ({ ...f, date: e.target.value }))}
+              disabled={isEditing && !canEdit}
             />
           </div>
 
@@ -219,12 +272,13 @@ export default function ReservationForm({
               <Select
                 value={form.startTime}
                 onValueChange={(v) => setForm((f) => ({ ...f, startTime: v }))}
+                disabled={isEditing && !canEdit}
               >
                 <SelectTrigger className="w-full">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  {timeOptions.map((t) => (
+                  {filteredTimeOptions.map((t) => (
                     <SelectItem key={t} value={t}>
                       {t}
                     </SelectItem>
@@ -238,12 +292,13 @@ export default function ReservationForm({
               <Select
                 value={form.endTime}
                 onValueChange={(v) => setForm((f) => ({ ...f, endTime: v }))}
+                disabled={isEditing && !canEdit}
               >
                 <SelectTrigger className="w-full">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  {timeOptions.map((t) => (
+                  {filteredEndTimeOptions.map((t) => (
                     <SelectItem key={t} value={t}>
                       {t}
                     </SelectItem>
@@ -252,6 +307,12 @@ export default function ReservationForm({
               </Select>
             </div>
           </div>
+
+          {isPastDateTime && (
+            <p className="text-xs text-destructive">
+              Não é possível agendar para data/horário que já passou.
+            </p>
+          )}
 
           {!validTime && (
             <p className="text-xs text-destructive">
@@ -267,6 +328,7 @@ export default function ReservationForm({
                 setForm((f) => ({ ...f, title: e.target.value }))
               }
               placeholder="Ex: Alinhamento de equipe"
+              disabled={isEditing && !canEdit}
             />
           </div>
 
@@ -279,12 +341,13 @@ export default function ReservationForm({
               }
               rows={2}
               placeholder="Informações adicionais..."
+              disabled={isEditing && !canEdit}
             />
           </div>
         </div>
 
         <DialogFooter className="flex-col gap-2 sm:flex-row">
-          {isEditing && (
+          {canEdit && isEditing && (
             <AlertDialog>
               <AlertDialogTrigger asChild>
                 <Button variant="destructive" className="sm:mr-auto">
@@ -313,9 +376,11 @@ export default function ReservationForm({
           <Button variant="outline" onClick={onClose} disabled={loading}>
             Fechar
           </Button>
-          <Button onClick={handleSubmit} disabled={!canSubmit || loading}>
-            {loading ? <Spinner /> : isEditing ? "Salvar" : "Reservar"}
-          </Button>
+          {(!isEditing || canEdit) && (
+            <Button onClick={handleSubmit} disabled={!canSubmit || loading}>
+              {loading ? <Spinner /> : isEditing ? "Salvar" : "Reservar"}
+            </Button>
+          )}
         </DialogFooter>
       </DialogContent>
     </Dialog>

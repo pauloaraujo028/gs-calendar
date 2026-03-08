@@ -1,6 +1,6 @@
 import { Reservation, Room } from "@/lib/generated/prisma/client";
+import { generateTimeSlots, TimeSlot } from "@/lib/reservation-utils";
 import { Clock } from "lucide-react";
-import { generateTimeSlots, TimeSlot } from "../lib/reservation-utils";
 
 interface TimeGridProps {
   rooms: Room[];

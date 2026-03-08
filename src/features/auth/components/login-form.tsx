@@ -1,6 +1,7 @@
 "use client";
 
 import { Label } from "@/components/ui/label";
+import { authClient } from "@/lib/auth-client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
@@ -9,16 +10,12 @@ import { useForm } from "react-hook-form";
 
 import { InputForm } from "@/components/ui/input-form";
 import { Spinner } from "@/components/ui/spinner";
-import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import z from "zod";
-import { Login } from "../actions";
 import { loginSchema } from "../schemas";
 
 const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
-
-  const router = useRouter();
 
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
@@ -29,16 +26,30 @@ const LoginForm = () => {
   });
 
   const onSubmit = async (data: z.infer<typeof loginSchema>) => {
-    const response = await Login(data);
-
-    if (response.error) {
-      toast.error(response.error);
-      return;
+    try {
+      await authClient.signIn.email(
+        {
+          email: data.email,
+          password: data.password,
+          callbackURL: "/",
+        },
+        {
+          onSuccess: async () => {
+            toast.success("Login realizado com sucesso!");
+          },
+          onError: async (ctx) => {
+            toast.error(
+              ctx.error.message ||
+                "Falha ao realizar login. Por favor, verifique suas credenciais e tente novamente.",
+            );
+          },
+        },
+      );
+    } catch {
+      throw new Error(
+        "Ops! Ocoreu um erro inesperado. Por favor, tente novamente.",
+      );
     }
-
-    toast.success("Login realizado com sucesso!");
-
-    router.push("/dashboard");
   };
 
   return (
