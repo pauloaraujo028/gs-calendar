@@ -1,6 +1,7 @@
 "use server";
 
 import { auth } from "@/lib/auth";
+import { APIError } from "better-auth/api";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import z from "zod";
@@ -53,7 +54,15 @@ export async function Register(data: z.infer<typeof registerSchema>) {
     });
 
     return { success: true };
-  } catch {
-    return { error: "Email ou senha incorretos" };
+  } catch (error) {
+    if (error instanceof APIError) {
+      return {
+        error: error.message,
+      };
+    }
+
+    return {
+      error: "Não foi possível criar sua conta. Tente novamente.",
+    };
   }
 }

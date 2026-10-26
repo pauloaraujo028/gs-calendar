@@ -107,7 +107,7 @@ export default function Content({
               <Card>
                 <CardContent className="py-12 text-center text-muted-foreground">
                   Nenhuma sala cadastrada. Clique em
-                  <strong className="mr-1">Nova Sala</strong>
+                  <strong className="m-1">Nova Sala</strong>
                   para começar.
                 </CardContent>
               </Card>

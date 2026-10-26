@@ -9,7 +9,7 @@ const Footer = () => {
         <span>© {year} — Todos os direitos reservados.</span>
         <span>Desenvolvido por</span>
         <Link
-          href="https://pauloaraujo-portfolio.vercel.app/"
+          href="https://pauloaraujo028.vercel.app/"
           target="_blank"
           rel="noopener noreferrer"
           className="font-medium text-primary hover:underline"
